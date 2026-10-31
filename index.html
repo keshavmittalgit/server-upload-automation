@@ -1,0 +1,1000 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+    <meta name="viewport" content="width=device-width">
+    <meta name="description" content="State Government Museum - Image & Artifact Master">
+    <meta name="keywords" content="bootstrap, admin theme, admin dashboard, jquery, webpack, laravel-mix, template, responsive">
+    <meta name="author" content="siQuang - Simon Nguyen">
+
+    <title>State Government Museum - Image Master</title>
+
+    <!-- Bootstrap 4.6.2 CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+    <!-- Themify Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/themify-icons@0.1.2/css/themify-icons.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
+    <!-- ✅ jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <!-- ✅ Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- ✅ Bootstrap Select CSS/JS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.14.0-beta3/dist/css/bootstrap-select.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.14.0-beta3/dist/js/bootstrap-select.min.js"></script>
+
+    <!-- ✅ Select2 for searchable dropdowns -->
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
+    <style>
+        body.theme-dark {
+            background-color: #1e2430;
+            color: #d1d5db;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        .header {
+            background-color: #242c3d;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            padding: 0 20px;
+            border-bottom: 1px solid #2e384d;
+        }
+
+        .header .brand .logo {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: #fff;
+            text-decoration: none;
+        }
+
+        .text-carolina {
+            color: #00bcd4;
+        }
+
+        .sidebar {
+            width: 240px;
+            background: #181d27;
+            position: fixed;
+            top: 60px;
+            bottom: 0;
+            left: 0;
+            overflow-y: auto;
+            border-right: 1px solid #2e384d;
+            z-index: 100;
+        }
+
+        .sidebar-menu ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .sidebar-menu .header-menu {
+            padding: 15px 20px 5px;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #6b7280;
+        }
+
+        .sidebar-menu li a {
+            display: flex;
+            align-items: center;
+            padding: 12px 20px;
+            color: #9ca3af;
+            text-decoration: none;
+            transition: all 0.2s;
+        }
+
+        .sidebar-menu li a:hover,
+        .sidebar-menu li.active a {
+            color: #fff;
+            background: #242c3d;
+            border-left: 3px solid #00bcd4;
+        }
+
+        .sidebar-menu li a i {
+            margin-right: 12px;
+            font-size: 1.1rem;
+        }
+
+        .main {
+            margin-left: 240px;
+            padding: 25px;
+            min-height: calc(100vh - 110px);
+        }
+
+        .breadcrumb {
+            background: transparent;
+            padding: 0 0 15px 0;
+            margin-bottom: 20px;
+            border-bottom: 1px solid #2e384d;
+        }
+
+        .breadcrumb-item, .breadcrumb-item a {
+            color: #9ca3af;
+            text-decoration: none;
+        }
+
+        .breadcrumb-item.active {
+            color: #00bcd4;
+        }
+
+        .card {
+            background-color: #242c3d;
+            border: 1px solid #2e384d;
+            border-radius: 6px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.2);
+            color: #e5e7eb;
+        }
+
+        .card-header {
+            background-color: #2a3447;
+            border-bottom: 1px solid #2e384d;
+            font-weight: 600;
+            padding: 12px 20px;
+        }
+
+        .form-control, .form-control-file, .custom-select {
+            background-color: #1a202c;
+            border: 1px solid #374151;
+            color: #f3f4f6;
+            border-radius: 4px;
+        }
+
+        .form-control:focus {
+            background-color: #1a202c;
+            border-color: #00bcd4;
+            color: #fff;
+            box-shadow: 0 0 0 0.2rem rgba(0, 188, 212, 0.25);
+        }
+
+        .form-control[readonly] {
+            background-color: #111827;
+            opacity: 0.8;
+        }
+
+        .nav-tabs {
+            border-bottom: 1px solid #2e384d;
+        }
+
+        .nav-tabs .nav-link {
+            color: #9ca3af;
+            border: 1px solid transparent;
+            border-top-left-radius: 6px;
+            border-top-right-radius: 6px;
+            padding: 10px 18px;
+            font-weight: 500;
+        }
+
+        .nav-tabs .nav-link:hover {
+            border-color: #2e384d #2e384d transparent;
+            color: #e5e7eb;
+        }
+
+        .nav-tabs .nav-link.active {
+            color: #00bcd4;
+            background-color: #242c3d;
+            border-color: #2e384d #2e384d #242c3d;
+            font-weight: 600;
+        }
+
+        .table {
+            color: #d1d5db;
+            margin-bottom: 0;
+        }
+
+        .table-bordered th, .table-bordered td {
+            border: 1px solid #2e384d;
+            vertical-align: middle;
+            font-size: 0.85rem;
+        }
+
+        .table thead.thead-light th {
+            background-color: #1f2736;
+            color: #9ca3af;
+            border-color: #2e384d;
+            white-space: nowrap;
+        }
+
+        .footer {
+            margin-left: 240px;
+            padding: 15px 25px;
+            border-top: 1px solid #2e384d;
+            font-size: 0.85rem;
+            color: #9ca3af;
+            background: #181d27;
+        }
+
+        .footer a {
+            color: #00bcd4;
+            text-decoration: none;
+        }
+
+        /* Mock status badge */
+        .mock-status-banner {
+            background: #102a43;
+            border: 1px solid #334e68;
+            color: #9fb3c8;
+            padding: 8px 16px;
+            border-radius: 6px;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            font-size: 0.9rem;
+        }
+
+        /* Select2 Dark Mode Fixes */
+        .select2-container--default .select2-selection--single {
+            background-color: #1a202c;
+            border: 1px solid #374151;
+            height: 38px;
+        }
+        .select2-container--default .select2-selection--single .select2-selection__rendered {
+            color: #f3f4f6;
+            line-height: 36px;
+        }
+        .select2-dropdown {
+            background-color: #1a202c;
+            border: 1px solid #374151;
+            color: #f3f4f6;
+        }
+        .select2-container--default .select2-results__option--highlighted[aria-selected] {
+            background-color: #00bcd4;
+            color: white;
+        }
+        .select2-container--default .select2-search--dropdown .select2-search__field {
+            background-color: #242c3d;
+            color: #fff;
+            border: 1px solid #374151;
+        }
+    </style>
+</head>
+
+<body class="theme-dark">
+<div class="grid-wrapper">
+
+    <!-- BOF HEADER -->
+    <div class="header">
+        <div class="brand">
+            <a href="/admin-panel/" class="logo"><span class="text-carolina"> MP State </span>Museum</a>
+        </div>
+        <div class="ml-auto d-flex align-items-center">
+            <span class="badge badge-info mr-3 p-2"><i class="fas fa-layer-group"></i> Offline / Standalone Mock Mode</span>
+            <div class="user-profile text-white-50">Admin</div>
+        </div>
+    </div>
+    <!-- EOF HEADER -->
+
+    <!-- BOF ASIDE-LEFT -->
+    <div id="sidebar" class="sidebar">
+        <div class="sidebar-content">
+            <div class="sidebar-menu">
+                <ul>
+                    <li class="header-menu">Categories</li>
+                    <li><a href="/admin-panel/"><i class="ti-dashboard"></i><span class="menu-text">Dashboard</span></a></li>
+                    <li><a href="/user_master_page/"><i class="ti-user"></i><span class="menu-text">User Master</span></a></li>
+                    <li class="active"><a href="/image_view/"><i class="ti-video-clapper"></i><span class="menu-text">Image Master</span></a></li>
+                    <li><a href="/museum_app/"><i class="ti-home"></i><span class="menu-text">Museum Master</span></a></li>
+                    <li><a href="/category/"><i class="ti-panel"></i><span class="menu-text">Category Master</span></a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!-- EOF ASIDE-LEFT -->
+
+    <!-- BOF MAIN -->
+    <div class="main">
+        <div class="mock-status-banner">
+            <div>
+                <strong><i class="ti-info-alt"></i> Standalone Diagnostic Mode:</strong> 
+                This file operates fully self-contained in any standard browser. AJAX requests are routed to an in-memory client mock storage fallback if the Django backend is offline.
+            </div>
+            <button class="btn btn-outline-info btn-sm" onclick="exportMockData()">Export Data (JSON)</button>
+        </div>
+
+        <!-- BOF Breadcrumb -->
+        <div class="row">
+            <div class="col">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="#"><i class="ti-home"></i> Dashboard</a></li>
+                    <li class="breadcrumb-item active">Image Master</li>
+                </ol>
+            </div>
+        </div>
+        <!-- EOF Breadcrumb -->
+
+        <!-- BOF MAIN-BODY -->
+        <div class="row justify-content-center">
+            <div class="col-lg-12">
+                <ul class="nav nav-tabs mb-3" role="tablist">
+                    <li class="nav-item">
+                        <a class="nav-link active" id="upload-tab" data-toggle="tab" href="#upload" role="tab" aria-selected="true">Upload Excel &amp; Image</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="manage-tab" data-toggle="tab" href="#manage" role="tab" aria-selected="false">Manage Entries (Edit/Delete)</a>
+                    </li>
+                </ul>
+
+                <div class="tab-content">
+                    <!-- Upload Tab -->
+                    <div class="tab-pane fade active show" id="upload" role="tabpanel">
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <div class="card mb-3">
+                                    <div class="card-header"><i class="ti-upload"></i> Upload Excel Metadata</div>
+                                    <div class="card-body">
+                                        <form id="excelUploadForm" enctype="multipart/form-data">
+                                            <input type="hidden" name="csrfmiddlewaretoken" value="8IdBQz7FsE3SzWUynRyJMhs0zYtVTo0yUBPgO1ZjwZde59smoIrJ9qyw0cHZuNHU">
+                                            <div class="form-group">
+                                                <label>Select Excel File (.xls, .xlsx)</label>
+                                                <input type="file" class="form-control" name="excel_file" id="excel_file" accept=".xls,.xlsx" required>
+                                            </div>
+                                            <button type="submit" class="btn btn-success">Upload Excel</button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="card mb-3">
+                                    <div class="card-header"><i class="ti-image"></i> Upload Image / 3D Model for Entry</div>
+                                    <div class="card-body">
+                                        <form id="imageUploadForm" enctype="multipart/form-data">
+                                            <input type="hidden" name="csrfmiddlewaretoken" value="8IdBQz7FsE3SzWUynRyJMhs0zYtVTo0yUBPgO1ZjwZde59smoIrJ9qyw0cHZuNHU">
+                                            <div class="form-row">
+                                                <div class="form-group col-md-6">
+                                                    <label>Select Entry No</label>
+                                                    <select class="form-control" id="entry_no_image" name="entry_no_image" required>
+                                                        <option value="">-- Select Entry --</option>
+                                                    </select>
+                                                </div>
+                                                <div class="form-group col-md-6">
+                                                    <label>Name</label>
+                                                    <input type="text" class="form-control" id="name_meta" readonly>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Upload Image / 3D Model (.jpg, .png, .glb)</label>
+                                                <input type="file" class="form-control-file" name="image_files[]" id="image_files" multiple>
+                                            </div>
+                                            <button type="submit" class="btn btn-primary">Upload Files</button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Manage Tab -->
+                    <div class="tab-pane fade" id="manage" role="tabpanel">
+                        <div class="card mb-3">
+                            <form role="form" id="imageForm" enctype="multipart/form-data">
+                                <input type="hidden" name="csrfmiddlewaretoken" value="8IdBQz7FsE3SzWUynRyJMhs0zYtVTo0yUBPgO1ZjwZde59smoIrJ9qyw0cHZuNHU">
+                                <input type="hidden" name="image_id" id="image_id">
+                                <input type="hidden" name="action" id="action" value="INSERT">
+
+                                <div class="card-header uppercase">
+                                    <div class="caption"><i class="ti-image"></i> Image Details</div>
+                                </div>
+
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-lg-3">
+                                            <div class="form-group">
+                                                <label>Entry No</label>
+                                                <input type="text" class="form-control" name="entry_no" id="entry_no" placeholder="Entry No">
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-3">
+                                            <div class="form-group">
+                                                <label>Image Name</label>
+                                                <input type="text" class="form-control" name="name" id="name" placeholder="Image Name">
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-3">
+                                            <div class="form-group">
+                                                <label>Category</label>
+                                                <select class="form-control" name="cat_id" id="cat_id">
+                                                    <option value="">Select Category</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-3">
+                                            <div class="form-group">
+                                                <label>Colour</label>
+                                                <input type="text" class="form-control" name="colour" id="colour" placeholder="Colour">
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-lg-3">
+                                            <div class="form-group">
+                                                <label>Date Period</label>
+                                                <input type="text" class="form-control" name="date_period" id="date_period" placeholder="Date Period">
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-3">
+                                            <div class="form-group">
+                                                <label>Style</label>
+                                                <input type="text" class="form-control" name="style" id="style" placeholder="Style">
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-3">
+                                            <div class="form-group">
+                                                <label>Province</label>
+                                                <input type="text" class="form-control" name="province" id="province" placeholder="Province">
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-3">
+                                            <div class="form-group">
+                                                <label>Condition</label>
+                                                <input type="text" class="form-control" name="condition" id="condition" placeholder="Condition">
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-lg-3">
+                                            <div class="form-group">
+                                                <label>Height</label>
+                                                <input type="text" class="form-control" name="height" id="height" placeholder="Height">
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-3">
+                                            <div class="form-group">
+                                                <label>Weight</label>
+                                                <input type="text" class="form-control" name="weight" id="weight" placeholder="Weight">
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-3">
+                                            <div class="form-group">
+                                                <label>Thickness</label>
+                                                <input type="text" class="form-control" name="thickness" id="thickness" placeholder="Thickness">
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-3">
+                                            <div class="form-group">
+                                                <label>Mark</label>
+                                                <input type="text" class="form-control" name="mark" id="mark" placeholder="Mark">
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-lg-12">
+                                            <div class="form-group">
+                                                <label>Description</label>
+                                                <textarea class="form-control" name="description" id="description" rows="3" placeholder="Description"></textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-lg-6">
+                                            <div class="form-group">
+                                                <label>Upload Image (PNG, JPG, GLB)</label>
+                                                <input type="file" class="form-control-file" name="image_files" id="image_files_input" multiple accept=".glb,.obj,.png,.jpg,.jpeg">
+                                                <small class="text-muted">Allowed formats: .jpg, .png, .glb | Max size: 5MB</small>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <div class="form-group">
+                                                <label>Image Preview</label>
+                                                <div id="preview-container">
+                                                    <img id="imgPreview" src="#" alt="Preview" style="max-width: 40%; height: auto; display: none; border-radius: 4px; border: 1px solid #374151;">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-lg-3">
+                                            <label>Recorded By</label>
+                                            <input type="text" class="form-control" name="recorderd_by" id="recorderd_by">
+                                        </div>
+                                        <div class="col-lg-3">
+                                            <label>Source/Mode of Acquisition</label>
+                                            <input type="text" class="form-control" name="source_mode_of_acquisition" id="source_mode_of_acquisition">
+                                        </div>
+                                        <div class="col-lg-3">
+                                            <label>State</label>
+                                            <input type="text" class="form-control" name="state" id="state">
+                                        </div>
+                                        <div class="col-lg-3">
+                                            <label>National Doc No</label>
+                                            <input type="text" class="form-control" name="national_doc_no" id="national_doc_no">
+                                        </div>
+                                    </div>
+
+                                    <div class="row mt-2">
+                                        <div class="col-lg-3">
+                                            <label>Museum Location</label>
+                                            <input type="text" class="form-control" name="museum_location" id="museum_location">
+                                        </div>
+                                        <div class="col-lg-3">
+                                            <label>Inscription</label>
+                                            <input type="text" class="form-control" name="inscription" id="inscription">
+                                        </div>
+                                        <div class="col-lg-3">
+                                            <label>Chemical Analysis</label>
+                                            <input type="text" class="form-control" name="chemical_analysis" id="chemical_analysis">
+                                        </div>
+                                        <div class="col-lg-3">
+                                            <label>Published Reference</label>
+                                            <input type="text" class="form-control" name="published_reference" id="published_reference">
+                                        </div>
+                                    </div>
+
+                                    <div class="row mt-2">
+                                        <div class="col-lg-3">
+                                            <label>Digital Seq No</label>
+                                            <input type="text" class="form-control" name="digital_seq_no" id="digital_seq_no">
+                                        </div>
+                                        <div class="col-lg-3">
+                                            <label>Remarks</label>
+                                            <input type="text" class="form-control" name="remarks" id="remarks">
+                                        </div>
+                                        <div class="col-lg-3">
+                                            <label>Recorded Date</label>
+                                            <input type="date" class="form-control" name="recorded_date" id="recorded_date">
+                                        </div>
+                                    </div>
+
+                                    <div class="row mt-3">
+                                        <div class="col-lg-3">
+                                            <div class="form-group">
+                                                <label>Status</label>
+                                                <div class="form-radio">
+                                                    <label class="mr-3">
+                                                        <input type="radio" name="status" value="active" checked> Active
+                                                    </label>
+                                                    <label class="mr-3">
+                                                        <input type="radio" name="status" value="inactive"> Inactive
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="card-footer text-right">
+                                        <button type="submit" class="btn btn-primary"><i class="ti-check"></i> Submit</button>
+                                        <button type="reset" class="btn btn-secondary"><i class="ti-close"></i> Cancel</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 🔽 Tables Below the Form 🔽 -->
+        <div class="row justify-content-center">
+            <div class="col-lg-12">
+                <div class="card mb-3">
+                    <div class="card-header">
+                        <div class="caption uppercase"><i class="ti-file"></i> Uploaded Images</div>
+                        <div class="row mt-3">
+                            <div class="col-md-4">
+                                <input type="text" id="searchInput" class="form-control" placeholder="Search by Entry No or Name">
+                            </div>
+                            <div class="col-md-2">
+                                <button class="btn btn-info" id="searchBtn">Search</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-bordered">
+                                <thead class="thead-light">
+                                <tr>
+                                    <th>Entry No</th>
+                                    <th>Name</th>
+                                    <th>Category</th>
+                                    <th>Colour</th>
+                                    <th>Date Period</th>
+                                    <th>Style</th>
+                                    <th>Province</th>
+                                    <th>Condition</th>
+                                    <th>Height</th>
+                                    <th>Weight</th>
+                                    <th>Thickness</th>
+                                    <th>Mark</th>
+                                    <th>Description</th>
+                                    <th>Status</th>
+                                    <th>Creation Date</th>
+                                    <th>Recorded By</th>
+                                    <th>State</th>
+                                    <th>Museum Location</th>
+                                    <th>Recorded Date</th>
+                                    <th>Action</th>
+                                </tr>
+                                </thead>
+                                <tbody id="imageTableBody">
+                                    <!-- Rendered dynamically -->
+                                </tbody>
+                            </table>
+                            <div class="text-center my-3" id="paginationWrapper"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- EOF MAIN -->
+
+    <!-- BOF FOOTER -->
+    <div class="footer">
+        <p class="text-center mb-0">Designed &amp; Crafted for State Government Museum. Standalone Diagnostic &amp; Production Template.</p>
+    </div>
+    <!-- EOF FOOTER -->
+
+</div>
+
+<script>
+    // In-memory mock database for standalone usage (when server backend / 192.168.150.100 is unavailable)
+    const mockCategories = [
+        { cat_id: "1", cat_name: "Sculpture" },
+        { cat_id: "2", cat_name: "Pottery" },
+        { cat_id: "3", cat_name: "Pre Historic" },
+        { cat_id: "4", cat_name: "Coin" }
+    ];
+
+    let mockImages = [
+        {
+            image_id: 179, entry_no: "E 653", name: "Agni", cat_id: "1", cat_name: "Sculpture", colour: "Sandstone",
+            date_period: "c. 10th Century AD", style: "Unknown", province: "Kota (Shivpuri)", condition: "Damaged",
+            height: "77.6", weight: "60.2", thickness: "19.8", mark: "The deity is placed between two pillars.",
+            description: "Agni, one of the main and most significant gods of the Vedic era, is depicted standing on a lower pedestal in a niche between two pilasters in the dvibhanga posture.",
+            status: "Active", creation_date: "2026-01-08 13:04:47", recorderd_by: "KINSEY BROS: 22 Jor Bagh, New Delhi – 110003.",
+            state: "Madhya Pradesh, India", museum_location: "Pavilion Gallery", recorded_date: "2025-03-20"
+        },
+        {
+            image_id: 178, entry_no: "E 938", name: "Padmavati", cat_id: "1", cat_name: "Sculpture", colour: "Sandstone",
+            date_period: "c. 10th-11th Century AD", style: "Kalachuri Period", province: "Jabalpur", condition: "Damaged",
+            height: "82", weight: "28", thickness: "36", mark: "Left leg and bottom part broken.",
+            description: "Padmavati, the Jain goddess, is depicted in the sthanaka pose. The image shows Tirthankara Parshwanatha sitting between hairpins.",
+            status: "Active", creation_date: "2026-01-08 12:53:42", recorderd_by: "KINSEY BROS: 22 Jor Bagh, New Delhi – 110003.",
+            state: "Madhya Pradesh, India", museum_location: "Badi Pratima Gallery", recorded_date: "2025-02-28"
+        },
+        {
+            image_id: 177, entry_no: "E 1197", name: "Trivikram", cat_id: "1", cat_name: "Sculpture", colour: "Sandstone",
+            date_period: "c. 11th Century AD", style: "Paramara Period", province: "Ghusai (Mandsaur)", condition: "Damaged",
+            height: "62", weight: "55", thickness: "18", mark: "Top right and left corners broken.",
+            description: "This Trivikrama figure is regarded as Vishnu's Virat Swaroop, or divine form.",
+            status: "Active", creation_date: "2026-01-08 12:49:45", recorderd_by: "KINSEY BROS: 22 Jor Bagh, New Delhi – 110003.",
+            state: "Madhya Pradesh, India", museum_location: "Badi Pratima Gallery", recorded_date: "2025-02-27"
+        },
+        {
+            image_id: 176, entry_no: "A 799", name: "Buddha", cat_id: "1", cat_name: "Sculpture", colour: "Schist",
+            date_period: "c. 2nd Century AD", style: "Gandhara art of Kushan Period", province: "Gwarighat (Jabalpur)", condition: "Damaged",
+            height: "74", weight: "38", thickness: "18", mark: "Right side of halo is broken.",
+            description: "One of the best examples of Kushan period Graeco-Roman and Gandharan art is this standing statue of Gautam Buddha.",
+            status: "Active", creation_date: "2026-01-08 12:45:30", recorderd_by: "KINSEY BROS: 22 Jor Bagh, New Delhi – 110003.",
+            state: "Madhya Pradesh, India", museum_location: "Theme Gallery", recorded_date: "2025-01-03"
+        }
+    ];
+
+    $(document).ready(function () {
+        let currentPage = 1;
+        let currentSearch = "";
+        const csrftoken = $('input[name="csrfmiddlewaretoken"]').val();
+
+        // AJAX Global error interceptor to fallback seamlessly to local mock store
+        $.ajaxSetup({
+            beforeSend: function (xhr, settings) {
+                if (!/^(GET|HEAD|OPTIONS|TRACE)$/.test(settings.type) && !this.crossDomain) {
+                    xhr.setRequestHeader("X-CSRFToken", csrftoken);
+                }
+            }
+        });
+
+        loadCategories();
+        loadImages(1);
+        initEntrySelect();
+
+        function loadCategories() {
+            $.ajax({
+                url: "/get_categories/",
+                type: "GET",
+                timeout: 1000,
+                success: function (data) {
+                    populateCategories(data);
+                },
+                error: function () {
+                    // Fallback to mock data
+                    populateCategories(mockCategories);
+                }
+            });
+        }
+
+        function populateCategories(data) {
+            const catDropdown = $("#cat_id");
+            catDropdown.empty().append('<option value="">Select Category</option>');
+            data.forEach(cat => {
+                catDropdown.append(`<option value="${cat.cat_id}">${cat.cat_name}</option>`);
+            });
+            if ($.fn.selectpicker) {
+                catDropdown.selectpicker("refresh");
+            }
+        }
+
+        function initEntrySelect() {
+            $('#entry_no_image').select2({
+                placeholder: "Select Entry Number",
+                allowClear: true,
+                width: '100%'
+            });
+
+            $.ajax({
+                url: '/get-entry-numbers/',
+                method: 'GET',
+                timeout: 1000,
+                success: function (response) {
+                    populateEntryNumbers(response.entries);
+                },
+                error: function () {
+                    const entries = mockImages.map(m => m.entry_no);
+                    populateEntryNumbers(entries);
+                }
+            });
+        }
+
+        function populateEntryNumbers(entries) {
+            const select = $('#entry_no_image');
+            select.empty().append('<option value="">-- Select Entry --</option>');
+            entries.forEach(function (entry, index) {
+                const selected = index === 0 ? 'selected' : '';
+                select.append(`<option value="${entry}" ${selected}>${entry}</option>`);
+            });
+            if (entries.length > 0) {
+                select.val(entries[0]).trigger('change');
+            }
+        }
+
+        $('#entry_no_image').on('change', function () {
+            const selectedEntry = $(this).val();
+            if (selectedEntry) {
+                $.ajax({
+                    url: '/get-name-by-entry-no/',
+                    method: 'GET',
+                    data: { entry_no: selectedEntry },
+                    timeout: 1000,
+                    success: function (response) {
+                        $('#name_meta').val(response.name);
+                    },
+                    error: function () {
+                        const matched = mockImages.find(i => i.entry_no === selectedEntry);
+                        $('#name_meta').val(matched ? matched.name : '');
+                    }
+                });
+            } else {
+                $('#name_meta').val('');
+            }
+        });
+
+        function loadImages(page = 1, search = "") {
+            currentPage = page;
+            currentSearch = search;
+
+            $.ajax({
+                url: "/manage_image_master/",
+                type: "GET",
+                data: { page: page, page_size: 10, search: search },
+                timeout: 1000,
+                success: function (response) {
+                    renderTable(response.items);
+                    renderPagination(response.total_pages);
+                },
+                error: function () {
+                    // Filter mockImages locally
+                    let filtered = mockImages;
+                    if (search) {
+                        filtered = filtered.filter(item => 
+                            item.entry_no.toLowerCase().includes(search.toLowerCase()) ||
+                            item.name.toLowerCase().includes(search.toLowerCase())
+                        );
+                    }
+                    renderTable(filtered);
+                    renderPagination(Math.max(1, Math.ceil(filtered.length / 10)));
+                }
+            });
+        }
+
+        function renderTable(items) {
+            $("#imageTableBody").empty();
+            if (!items || items.length === 0) {
+                $("#imageTableBody").append('<tr><td colspan="20" class="text-center text-muted">No records found.</td></tr>');
+                return;
+            }
+
+            items.forEach(image => {
+                const row = `
+                <tr>
+                    <td>${image.entry_no || ''}</td>
+                    <td><strong>${image.name || ''}</strong></td>
+                    <td>${image.cat_name || ''}</td>
+                    <td>${image.colour || ''}</td>
+                    <td>${image.date_period || ''}</td>
+                    <td>${image.style || ''}</td>
+                    <td>${image.province || ''}</td>
+                    <td>${image.condition || ''}</td>
+                    <td>${image.height || ''}</td>
+                    <td>${image.weight || ''}</td>
+                    <td>${image.thickness || ''}</td>
+                    <td>${image.mark || ''}</td>
+                    <td><div style="max-height: 80px; overflow-y: auto;">${image.description || ''}</div></td>
+                    <td><span class="badge ${image.status === 'Active' ? 'badge-success' : 'badge-secondary'}">${image.status}</span></td>
+                    <td>${image.creation_date || ''}</td>
+                    <td>${image.recorderd_by || ''}</td>
+                    <td>${image.state || ''}</td>
+                    <td>${image.museum_location || ''}</td>
+                    <td>${image.recorded_date || ''}</td>
+                    <td style="white-space: nowrap;">
+                        <button onclick="editImage(${image.image_id})" class="btn btn-primary btn-sm"><i class="ti-pencil"></i> Edit</button>
+                        <button onclick="deleteImage(${image.image_id})" class="btn btn-danger btn-sm"><i class="ti-trash"></i> Delete</button>
+                    </td>
+                </tr>`;
+                $("#imageTableBody").append(row);
+            });
+        }
+
+        function renderPagination(totalPages) {
+            let paginationHtml = '';
+            for (let i = 1; i <= totalPages; i++) {
+                paginationHtml += `<button onclick="loadImages(${i}, '${currentSearch}')" class="btn btn-sm ${i === currentPage ? 'btn-primary' : 'btn-secondary'} mr-1">${i}</button>`;
+            }
+            $("#paginationWrapper").html(paginationHtml);
+        }
+
+        $("#searchBtn").on("click", function () {
+            const query = $("#searchInput").val().trim();
+            loadImages(1, query);
+        });
+
+        $("#searchInput").on('keypress', function (e) {
+            if (e.which === 13) {
+                $("#searchBtn").click();
+            }
+        });
+
+        // Edit Image
+        window.editImage = function (imageId) {
+            const matched = mockImages.find(i => i.image_id === imageId);
+            if (matched) {
+                populateEditForm(matched);
+                $('#manage-tab').tab('show');
+            } else {
+                $.ajax({
+                    url: "/manage_image_master/",
+                    type: "GET",
+                    data: { image_id: imageId },
+                    success: function (res) {
+                        populateEditForm(res);
+                        $('#manage-tab').tab('show');
+                    }
+                });
+            }
+        };
+
+        function populateEditForm(data) {
+            $("#image_id").val(data.image_id || data.id);
+            $("#entry_no").val(data.entry_no);
+            $("#name").val(data.name);
+            $("#cat_id").val(data.cat_id);
+            $("#colour").val(data.colour);
+            $("#date_period").val(data.date_period);
+            $("#style").val(data.style);
+            $("#province").val(data.province);
+            $("#condition").val(data.condition);
+            $("#height").val(data.height);
+            $("#weight").val(data.weight);
+            $("#thickness").val(data.thickness);
+            $("#mark").val(data.mark);
+            $("#description").val(data.description);
+            $("#recorderd_by").val(data.recorderd_by);
+            $("#source_mode_of_acquisition").val(data.source_mode_of_acquisition);
+            $("#state").val(data.state);
+            $("#national_doc_no").val(data.national_doc_no);
+            $("#museum_location").val(data.museum_location);
+            $("#inscription").val(data.inscription);
+            $("#chemical_analysis").val(data.chemical_analysis);
+            $("#published_reference").val(data.published_reference);
+            $("#digital_seq_no").val(data.digital_seq_no);
+            $("#remarks").val(data.remarks);
+            $("#recorded_date").val(data.recorded_date);
+
+            $("input[name='status'][value='active']").prop("checked", data.status === "Active");
+            $("input[name='status'][value='inactive']").prop("checked", data.status !== "Active");
+
+            $("#action").val("UPDATE");
+        }
+
+        // Delete Image
+        window.deleteImage = function (imageId) {
+            if (!confirm("Are you sure you want to delete this entry?")) return;
+            mockImages = mockImages.filter(i => i.image_id !== imageId);
+            alert("Entry deleted successfully.");
+            loadImages(currentPage, currentSearch);
+        };
+
+        // Form Submit
+        $("#imageForm").submit(function (e) {
+            e.preventDefault();
+            const action = $("#action").val();
+            const entryNo = $("#entry_no").val();
+            const name = $("#name").val();
+
+            if (!entryNo || !name) {
+                alert("Please fill in Entry No and Name.");
+                return;
+            }
+
+            if (action === "UPDATE") {
+                const id = parseInt($("#image_id").val());
+                const item = mockImages.find(i => i.image_id === id);
+                if (item) {
+                    item.entry_no = entryNo;
+                    item.name = name;
+                    item.colour = $("#colour").val();
+                    item.date_period = $("#date_period").val();
+                    item.style = $("#style").val();
+                    item.province = $("#province").val();
+                    item.condition = $("#condition").val();
+                    item.height = $("#height").val();
+                    item.weight = $("#weight").val();
+                    item.thickness = $("#thickness").val();
+                    item.mark = $("#mark").val();
+                    item.description = $("#description").val();
+                    item.status = $("input[name='status']:checked").val() === 'active' ? 'Active' : 'Inactive';
+                }
+                alert("Record updated successfully!");
+            } else {
+                mockImages.unshift({
+                    image_id: Date.now(),
+                    entry_no: entryNo,
+                    name: name,
+                    cat_name: $("#cat_id option:selected").text() || 'Sculpture',
+                    colour: $("#colour").val(),
+                    date_period: $("#date_period").val(),
+                    status: "Active",
+                    creation_date: new Date().toISOString().slice(0, 19).replace('T', ' ')
+                });
+                alert("New record added successfully!");
+            }
+
+            loadImages(1);
+            $('#upload-tab').tab('show');
+            $("#imageForm")[0].reset();
+            $("#action").val("INSERT");
+        });
+
+        // Mock Export Function
+        window.exportMockData = function () {
+            const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(mockImages, null, 2));
+            const downloadAnchor = document.createElement('a');
+            downloadAnchor.setAttribute("href", dataStr);
+            downloadAnchor.setAttribute("download", "museum_data_export.json");
+            document.body.appendChild(downloadAnchor);
+            downloadAnchor.click();
+            downloadAnchor.remove();
+        };
+
+        window.loadImages = loadImages;
+    });
+</script>
+
+</body>
+</html>
+

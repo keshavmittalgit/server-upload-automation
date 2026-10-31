@@ -1,0 +1,4 @@
+__pycache__/
+*.pyc
+.native_browser_session/
+upload_report_*.json
