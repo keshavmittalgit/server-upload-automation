@@ -5,7 +5,7 @@ Architecture:
 - src.config            : Selectors, ports, file rules
 - src.browser_launcher  : Real native browser manager (Chrome/Edge)
 - src.file_scanner      : Strict .glb + MAIN validation & folder discovery
-- src.portal_driver     : Web element interactions (select, upload, submit)
+- src.portal_driver     : Web element interactions (select, upload, submit, await popup)
 - src.logger            : Live console streaming and JSON audit report
 """
 
@@ -65,7 +65,7 @@ def main():
     logger = AuditLogger(data_folder)
     logger.log(f"Selected Data Folder: {data_folder}", "SUCCESS")
 
-    current_dialog = {"message": None, "type": None}
+    current_dialog = {"message": None, "type": None, "received": False}
 
     # 3. Playwright Controller
     with sync_playwright() as p:
@@ -92,14 +92,18 @@ def main():
             logger.log(f"Could not connect to browser: {e}", "ERROR")
             return
 
-        # Native popup / alert listener
+        # -------------------------------------------------------------
+        # ✅ NATIVE BROWSER POPUP (ALERT / CONFIRM) EVENT LISTENER
+        # -------------------------------------------------------------
         def handle_dialog(dialog):
             msg = dialog.message
             d_type = dialog.type
-            logger.log(f"Popup [{d_type.upper()}]: \"{msg}\"", "POPUP")
+            logger.log(f"Server Popup Received [{d_type.upper()}]: \"{msg}\"", "POPUP")
             current_dialog["message"] = msg
             current_dialog["type"] = d_type
+            current_dialog["received"] = True
             logger.record_popup(d_type, msg)
+            # Automatically clicks OK on the native popup so the browser can continue!
             dialog.accept()
 
         target_page.on("dialog", handle_dialog)
@@ -146,10 +150,10 @@ def main():
                 size_kb = round(os.path.getsize(f) / 1024, 1)
                 logger.log(f"   -> Validated File: {os.path.basename(f)} ({size_kb} KB)")
 
-            current_dialog["message"] = None
-            current_dialog["type"] = None
+            logger.log(f"Uploading files for '{folder_name}', waiting for server popup...", "INFO")
 
             try:
+                # upload_item will wait for the native popup before proceeding!
                 ok, msg = upload_item(target_page, folder_name, files_to_upload, current_dialog)
                 if ok:
                     logger.log(f"SUCCESS '{folder_name}': {msg}", "SUCCESS")

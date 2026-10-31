@@ -66,14 +66,16 @@ def select_entry_dropdown(page, folder_name):
     return page.evaluate(js_select)
 
 
-def upload_item(page, folder_name, files_to_upload, current_dialog):
+def upload_item(page, folder_name, files_to_upload, current_dialog, timeout_seconds=120):
     """
-    Automates:
-    1. Ensure Upload Tab active
-    2. Select in menu first
-    3. Attach files
-    4. Submit
-    5. Await response/dialog
+    Automates uploading:
+    1. Ensures Upload Tab is active.
+    2. Selects the folder/entry in the menu first.
+    3. Attaches .glb and MAIN files.
+    4. Clicks the Upload button.
+    5. WAITS for the server to finish and for the NATIVE BROWSER POPUP (alert/confirm) to appear.
+    6. Reads the popup text to determine SUCCESS or FAILURE.
+    7. Clicks OK on the popup, and proceeds to the next folder.
     """
     # 1. Ensure Upload tab is visible
     upload_tab = page.locator(SELECTORS["upload_tab"])
@@ -100,7 +102,12 @@ def upload_item(page, folder_name, files_to_upload, current_dialog):
     file_input.set_input_files(files_to_upload)
     page.wait_for_timeout(400)
 
-    # 4. Click Submit
+    # Reset dialog tracker for this upload
+    current_dialog["message"] = None
+    current_dialog["type"] = None
+    current_dialog["received"] = False
+
+    # 4. Click Submit / Upload Files button
     submit_btn = page.locator(SELECTORS["submit_btn"])
     if submit_btn.count() == 0:
         submit_btn = page.locator('button:has-text("Upload Files")')
@@ -108,12 +115,22 @@ def upload_item(page, folder_name, files_to_upload, current_dialog):
     submit_btn.scroll_into_view_if_needed()
     submit_btn.click()
 
-    # 5. Wait for network / popup
-    page.wait_for_timeout(2000)
+    # 5. DYNAMIC WAIT: Wait until the server finishes processing and the native popup appears!
+    start_time = time.time()
+    while not current_dialog.get("received"):
+        page.wait_for_timeout(500)
+        elapsed = time.time() - start_time
+        if elapsed > timeout_seconds:
+            return False, f"Upload timed out after {timeout_seconds}s waiting for server popup"
 
-    popup_msg = current_dialog.get("message") or "Upload request sent"
-    if current_dialog.get("message") and any(err in current_dialog["message"].lower() for err in ["error", "fail", "invalid"]):
-        return False, f"Server popup error: {popup_msg}"
+    popup_msg = current_dialog.get("message") or ""
+    popup_lower = popup_msg.lower()
 
-    return True, popup_msg
+    # 6. Analyze popup message: determine if success or fail
+    failure_keywords = ["error", "fail", "invalid", "not allowed", "already exists", "exceeded"]
+    is_failure = any(keyword in popup_lower for keyword in failure_keywords)
 
+    if is_failure:
+        return False, f"Popup indicated failure: {popup_msg}"
+    else:
+        return True, f"Popup indicated success: {popup_msg}"
