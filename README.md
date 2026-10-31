@@ -98,3 +98,4 @@ The tool patiently waits for the server to finish and for the popup to show befo
 
 **Q: Can I stop it midway?**  
 Yes, simply press `Ctrl + C` in your Command Prompt window to stop at any time.
+
